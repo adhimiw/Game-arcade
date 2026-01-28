@@ -4,7 +4,7 @@ export interface SudokuBoard {
   puzzle: number[][]
   solution: number[][]
   current: number[][]
-  mistakes: number[][]
+  mistakes: boolean[][]
   isFixed: boolean[][]
 }
 
@@ -82,8 +82,8 @@ const generateSudoku = (difficulty: 'easy' | 'medium' | 'hard'): SudokuBoard => 
   }
 
   // Create fixed cells mask
-  const isFixed = puzzle.map((row, rowIndex) =>
-    row.map((cell, colIndex) => cell !== 0)
+  const isFixed = puzzle.map((row) =>
+    row.map((cell) => cell !== 0)
   )
 
   return {
@@ -150,47 +150,48 @@ export const useSudokuStore = create<SudokuGameState & SudokuActions>((set, get)
   },
 
   setCellValue: (row, col, value) => {
-    const { board, selectedCell, startTime } = get()
+    const { board } = get()
     if (board.isFixed[row][col]) return
     
     const newCurrent = board.current.map(r => [...r])
     newCurrent[row][col] = value
     
     const isCorrect = board.solution[row][col] === value
-    const newMistakes = board.mistakes.map(r => [...r])
-    newMistakes[row][col] = !isCorrect
+    const newMistakesBoard = board.mistakes.map(r => [...r])
+    newMistakesBoard[row][col] = !isCorrect
     
     const updatedBoard = {
       ...board,
       current: newCurrent,
-      mistakes: newMistakes
+      mistakes: newMistakesBoard
     }
 
     // Check if game is completed
     let isCompleted = false
     if (value !== 0) {
-      isCompleted = updatedBoard.current.every((row, rIndex) =>
-        row.every((cell, cIndex) =>
+      isCompleted = updatedBoard.current.every((currentRow, rIndex) =>
+        currentRow.every((cell, cIndex) =>
           cell === updatedBoard.solution[rIndex][cIndex]
         )
       )
     }
 
-    const newMistakes = isCorrect ? get().mistakes : get().mistakes + 1
+    const mistakeCount = isCorrect ? get().mistakes : get().mistakes + 1
 
     set({
       board: updatedBoard,
       selectedCell: { row, col },
-      mistakes: newMistakes,
+      mistakes: mistakeCount,
       isCompleted,
       endTime: isCompleted ? Date.now() : null
     })
 
     // Auto-save progress
+    const startTime = get().startTime
     if (startTime) {
       const progress = {
         current: newCurrent,
-        mistakes: newMistakes,
+        mistakes: mistakeCount,
         timestamp: Date.now()
       }
       localStorage.setItem(`sudoku-progress-${get().difficulty}`, JSON.stringify(progress))

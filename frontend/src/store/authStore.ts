@@ -7,6 +7,8 @@ interface User {
   username: string
   email: string
   avatar?: string
+  firstName?: string
+  lastName?: string
   createdAt: string
   scores: Score[]
 }

@@ -203,7 +203,7 @@ export const useSnakeStore = create<SnakeGameState & SnakeActions>((set, get) =>
   },
 
   eatFood: () => {
-    const { food, score, level, speed, gameMode } = get()
+    const { food, score, level, speed } = get()
     
     let newScore = score + food.value
     let newSpeed = speed

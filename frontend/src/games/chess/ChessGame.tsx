@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Play, 
   Pause, 
-  RotateCcw, 
-  Settings,
+  RotateCcw,
   Crown,
   Clock,
-  Users,
-  Zap,
-  Trophy
+  Zap
 } from 'lucide-react'
 
 interface ChessPiece {
@@ -119,7 +116,7 @@ const ChessGame = () => {
   }
 
   // Check if square is valid move
-  const isValidMove = (from: Position, to: Position): boolean => {
+  const isValidMove = (_from: Position, to: Position): boolean => {
     return gameState.validMoves.some(move => 
       move.row === to.row && move.col === to.col
     )

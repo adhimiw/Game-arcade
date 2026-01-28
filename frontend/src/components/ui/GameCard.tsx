@@ -18,7 +18,6 @@ interface GameCardProps {
 const GameCard = ({ 
   title, 
   description, 
-  image, 
   difficulty, 
   players, 
   duration, 

@@ -141,7 +141,7 @@ const Leaderboard = () => {
 
   const filteredLeaderboard = mockLeaderboard
     .filter(entry => selectedGame === 'all' || entry.game === selectedGame)
-    .filter(entry => {
+    .filter(_entry => {
       if (selectedPeriod === 'all') return true
       // In a real app, you'd filter by date here
       return true

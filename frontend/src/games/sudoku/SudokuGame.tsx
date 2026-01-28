@@ -11,7 +11,6 @@ import {
   Star
 } from 'lucide-react'
 import { useSudokuStore } from '../../store/sudokuStore'
-import { useAuthStore } from '../../store/authStore'
 
 const SudokuGame = () => {
   const {
@@ -19,7 +18,6 @@ const SudokuGame = () => {
     selectedCell,
     isCompleted,
     startTime,
-    endTime,
     difficulty,
     mistakes,
     score,
@@ -31,8 +29,6 @@ const SudokuGame = () => {
     resetGame,
     calculateScore
   } = useSudokuStore()
-
-  const { user } = useAuthStore()
   const [isPaused, setIsPaused] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
   const [showVictory, setShowVictory] = useState(false)

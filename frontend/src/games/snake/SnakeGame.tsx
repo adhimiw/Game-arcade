@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { 
   Pause, 
   Play, 
@@ -7,12 +7,10 @@ import {
   Trophy,
   Clock,
   Zap,
-  Target,
   Heart,
   Settings
 } from 'lucide-react'
 import { useSnakeStore } from '../../store/snakeStore'
-import { useAuthStore } from '../../store/authStore'
 
 const SnakeGame = () => {
   const {
@@ -35,7 +33,6 @@ const SnakeGame = () => {
     resetGame
   } = useSnakeStore()
 
-  const { user } = useAuthStore()
   const [gameStarted, setGameStarted] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [direction, setDirection] = useState({ x: 0, y: 0 })

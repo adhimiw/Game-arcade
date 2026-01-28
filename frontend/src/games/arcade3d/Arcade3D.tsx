@@ -1,19 +1,15 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { 
   OrbitControls, 
   Text, 
   Box, 
   Sphere, 
-  Environment,
-  useAnimations,
-  Html
+  Environment
 } from '@react-three/drei'
 import { motion } from 'framer-motion'
 import { 
-  Play, 
-  RotateCcw, 
-  Settings,
+  Play,
   Gamepad2,
   Zap,
   Trophy,
@@ -41,7 +37,7 @@ const ArcadeMachine = ({
   const [hovered, setHovered] = useState(false)
 
   useFrame((state) => {
-    if (meshRef.current && hovered) {
+    if (meshRef.current && (hovered || isHovered)) {
       meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.1
     }
   })
@@ -95,7 +91,6 @@ const ArcadeMachine = ({
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/inter-bold.woff"
         >
           {gameType.toUpperCase()}
         </Text>
